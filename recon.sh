@@ -19,6 +19,8 @@ echo '* - finds subdomains'
 echo '* - checks if subdomain is alive'
 #echo '* - checks if alive domain is vulnerable to takeover'
 echo '* - spiders alive domains'
+echo '* - checking waybackurls'
+echo '* - checking for SQLi'
 #echo '* - enumerates network via nmap'
 echo '* - scans for vulns with Nuclei'
  
@@ -30,6 +32,7 @@ SUBS=~/targets/$TARGET/$TARGET-subs.txt
 ALIVE=~/targets/$TARGET/$TARGET-alive.txt
 TAKEOVER=~/targets/$TARGET/$TARGET-takeover.txt
 SPIDER=~/targets/$TARGET/spider/
+WAYBACK=~/targets/$TARGET/$TARGET-wayback.txt
 NMAP=~/targets/$TARGET/$TARGET-nmap.txt
 NUCLEI=~/targets/$TARGET/$TARGET-nuclei.txt
  
@@ -46,6 +49,12 @@ cat $SUBS | ./httprobe -c 50 | tee $ALIVE
  
 echo '**** Spidering Alive Sites to Enumerate Endpoints'
 ./gospider -S $ALIVE -c 10 -d 1 -t 20 -o $SPIDER
+
+echo '**** Fetching known URLs from the Wayback Machine'
+cat $ALIVE | ./waybackurls | tee $WAYBACK
+
+echo '**** Checking for SQLi on Wayback Machine Data'
+./gf 
  
 #echo '*** Port Scanning Target #Subdomains through Nmap'
 #nmap -iL $SUBS -sT -Pn -F -A --max-retries 2 --open | tee $NMAP
