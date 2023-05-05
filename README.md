@@ -16,6 +16,10 @@ Must have packages and github repos pre-installed:
   
   nuclei
   
+  ------------
+  
+  Still a work in progress. Looking to add the following functionality
+  
   *waybackurls
   
   *gf
