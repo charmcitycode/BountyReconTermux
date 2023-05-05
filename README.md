@@ -19,3 +19,5 @@ Must have packages and github repos pre-installed:
   *waybackurls
   
   *gf
+  
+  *gf-patterns
